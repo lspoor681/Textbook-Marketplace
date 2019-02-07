@@ -9,7 +9,7 @@
             overflow: hidden;
             background-color: #333;
         }
-    
+
     /* Navbar links */
     .topnav a {
         float: left;
@@ -19,7 +19,7 @@
         padding: 14px 16px;
         text-decoration: none;
     }
-    
+
     /* Links - change color on hover */
     .topnav a:hover {
         background-color: #ddd;
@@ -33,15 +33,30 @@
         margin-right: 12px;
         font-size: 17px;
     }
+    th {
+        text-align: left;
+    }
     </style>
   </head>
   <body>
           <div class="topnav">
-              <a href="TextbookMain.html">Home</a>
-              <a href="Marketplace.html">Marketplace</a>
-              <a href="Login.html">Login</a>
+              <a href="/marketplace">Home</a>
               <input align = "right" type="text" placeholder="Search Textbook..">
           </div>
-    
+          
+          <table style="width:100%" align-text="left">
+              <tr>
+                  <th>Post ID</th>
+                  <th>Textbook Name</th>
+                  <th>Edition</th>
+              </tr>
+              <tr>
+                  <td>14213</td>
+                  <td>Calculus III (Undergraduate Texts in Mathematics)</td>
+                  <td>2</td>
+                  <td><a href="/textbook"> Click Here</a></td>
+              </tr>
+          </table>
+
   </body>
 </html>

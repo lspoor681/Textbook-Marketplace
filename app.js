@@ -6,6 +6,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 //connect to MongoDB
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://user:group7@ds121871.mlab.com:21871/textbook-marketplace', { useMongoClient: true });
 var db = mongoose.connection;
 
@@ -31,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // serve static files from template
-app.use(express.static(__dirname + '/pages'));
+app.use(express.static(__dirname + '/pages' , { index: false }));
 
 // include routes
 var routes = require('./routes/router');

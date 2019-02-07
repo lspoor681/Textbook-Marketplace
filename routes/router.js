@@ -1,12 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var path = require('path');
 
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
-  //res.send('home page')
-  return res.sendFile(path.join(__dirname + '/templateLogReg/index.html'));
+  return res.sendFile(path.join(__dirname + '/../pages/login.html'));
+});
+
+router.get('/register', function (req, res, next) {
+  return res.sendFile(path.join(__dirname + '/../pages/register.html'));
 });
 
 
@@ -36,7 +40,7 @@ router.post('/', function (req, res, next) {
         return next(error);
       } else {
         req.session.userId = user._id;
-        return res.redirect('/profile');
+        return res.redirect('/marketplace');
       }
     });
 
@@ -48,7 +52,7 @@ router.post('/', function (req, res, next) {
         return next(err);
       } else {
         req.session.userId = user._id;
-        return res.redirect('/profile');
+        return res.redirect('/marketplace');
       }
     });
   } else {
@@ -59,7 +63,7 @@ router.post('/', function (req, res, next) {
 })
 
 // GET route after registering
-router.get('/profile', function (req, res, next) {
+router.get('/marketplace', function (req, res, next) {
   User.findById(req.session.userId)
     .exec(function (error, user) {
       if (error) {
@@ -71,7 +75,24 @@ router.get('/profile', function (req, res, next) {
           return next(err);
         } else {
           //return res.send('<h1>Name: </h1>' + user.username + '<h2>Mail: </h2>' + user.email + '<br><a type="button" href="/logout">Logout</a>')
-          res.sendFile(__dirname + '/marketplace.html');
+          return res.sendFile(path.join(__dirname + '/../pages/marketplace.html'));
+        }
+      }
+    });
+});
+
+router.get('/textbook', function (req, res, next) {
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return next(err);
+        } else {
+          return res.sendFile(path.join(__dirname + '/../pages/textbook.html'));
         }
       }
     });
