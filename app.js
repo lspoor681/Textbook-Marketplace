@@ -6,7 +6,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 //connect to MongoDB
-mongoose.connect('mongodb://user:group7@ds121871.mlab.com:21871/textbook-marketplace', { useNewUrlParser: true });
+mongoose.connect('mongodb://user:group7@ds121871.mlab.com:21871/textbook-marketplace', { useMongoClient: true });
 var db = mongoose.connection;
 
 //handle mongo error

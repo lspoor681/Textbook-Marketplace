@@ -7,7 +7,7 @@
   "license": "none",
   "scripts": {
     "start": "node app",
-    "watch": "nodemon app && mongod"
+    "watch": "nodemon app"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
