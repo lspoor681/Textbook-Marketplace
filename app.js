@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+app.set('view engine', 'ejs');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Textbook = require('../models/textbook');
 var path = require('path');
 
 
@@ -60,7 +61,32 @@ router.post('/', function (req, res, next) {
     err.status = 400;
     return next(err);
   }
-})
+});
+
+router.post('/postText', function (req, res, next) {
+  if (req.body.title &&
+    req.body.author &&
+    req.body.isbn &&
+    req.body.price &&
+    req.body.make) {
+
+    var textbookData = {
+      title: req.body.title,
+      author: req.body.author,
+      isbn: req.body.isbn,
+      price: req.body.price,
+      make: req.body.make,
+    }
+
+    Textbook.create(textbookData, function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.redirect('/marketplace');
+      }
+    });
+  }else{ return res.redirect('/marketplace');}
+});
 
 // GET route after registering
 router.get('/marketplace', function (req, res, next) {
@@ -74,8 +100,24 @@ router.get('/marketplace', function (req, res, next) {
           err.status = 400;
           return next(err);
         } else {
-          //return res.send('<h1>Name: </h1>' + user.username + '<h2>Mail: </h2>' + user.email + '<br><a type="button" href="/logout">Logout</a>')
-          return res.sendFile(path.join(__dirname + '/../pages/marketplace.html'));
+          return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user});
+        }
+      }
+    });
+});
+
+router.get('/postText', function (req, res, next) {
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return next(err);
+        } else {
+          return res.sendFile(path.join(__dirname + '/../pages/posttextbook.html'));
         }
       }
     });

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Textbook Market</title>
+    <style>
+        h1   {text-align: center}
+        /* The navbar container */
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+    /* Navbar links */
+    .topnav a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    /* Links - change color on hover */
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+    .topnav input[type=text] {
+        float: right;
+        padding: 6px;
+        border: none;
+        margin-top: 8px;
+        margin-right: 12px;
+        font-size: 17px;
+    }
+    th {
+        text-align: left;
+    }
+    </style>
+  </head>
+  <body>
+          <div class="topnav">
+              <a href="/marketplace">Home</a>
+              <input align = "right" type="text" placeholder="Search Textbook..">
+          </div>
+
+          <div class="textbook submission form" align="center">
+            <h1>Submit Textbook for Sale!</h1>
+
+            <div class="text-submit-form">
+              <form id="login" action="/postText" method="post" onsubmit="//event.preventDefault();">
+                <input type="text" name="title" placeholder="Title" required=""> <br>
+                <input type="text" name="author" placeholder="Author" required=""> <br>
+                <input type="text" name="isbn" placeholder="ISBN-10" required=""> <br>
+                <input type="text" name="price" placeholder="Price" required=""> <br>
+                <select name="make" required>
+                  <option value="">Not Specified</option>
+                  <option value="hardcover">Hardcover</option>
+                  <option value="paperback">Paperback</option>
+                </select> <br>
+                <input type="submit" value="SUBMIT">
+              </form>
+            </div>
+        </div>
+
+  </body>
+</html>
