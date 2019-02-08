@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Textbook Market</title>
+  </head>
+  <body>        
+          <div class="signin-form" align="center">
+            <h1>Login</h1>
+        
+            <div class="login-form">
+              <form action="/" method="post">
+                <input type="text" name="logemail" placeholder="E-mail" required=""> <br>
+                <input type="password" name="logpassword" id="password" placeholder="Password" required=""> <br>
+                <input type="checkbox" onclick="showPass()">Show Password <br>
+                <div class="tp">
+                  <br><button type="submit">LOGIN NOW</button>
+                </div>
+                <br><br>Don't have an account yet? <a href="register">Create New Account</a><br>
+              </form>
+           </div>
+         </div>
+
+    <script type="text/javascript">
+      function showPass() {
+      var x = document.getElementById("password");
+        if (x.type == "password") {
+          x.type = "text";
+        } else {
+         x.type = "password";
+        } 
+      }
+    </script>
+
+  </body>
+</html>
