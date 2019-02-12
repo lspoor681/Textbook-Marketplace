@@ -9,11 +9,11 @@
             
             <div class="login-form">
               <form id="login" action="/" method="post" onsubmit="event.preventDefault(); validateMyForm();">
-                <input type="text" name="email" placeholder="Email" required=""> <br>
+                <input type="email" name="email" placeholder="Email" required=""> <br>
                 <input type="text" name="username" placeholder="Username" required=""> <br>
                 <input type="password" name="password" placeholder="Password" id="password" required="" > <br>
                 <input type="password" name="passwordConf" placeholder="Confirm Password" id="password_conf" required=""> <br>
-                <input type="checkbox" onclick="showPass()">Show Password <br>
+                <input type="checkbox" onclick="showPass()">Show Password<br>
                 <input type="submit" value="REGISTER">
               </form>
             </div>
@@ -21,14 +21,14 @@
         </div>
 
     <script type="text/javascript">
-      var passWordField = document.getElementById('password')
-      var passWordConfirmField = document.getElementById('password_conf')
-      var form = document.getElementById('login')
+      var passWordField = document.getElementById('password');
+      var passWordConfirmField = document.getElementById('password_conf');
+      var form = document.getElementById('login');
       function validateMyForm(){
         if(passWordField.value != passWordConfirmField.value){ 
             alert("Passwords do not match. Please try again.");
           } else {
-            form.submit()
+            form.submit();
           }
       }
 

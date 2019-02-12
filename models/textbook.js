@@ -25,6 +25,18 @@ var TextbookSchema = new mongoose.Schema({
   }
 });
 
+/*TextbookSchema.statics.getTextbooks = function(){
+  return new Promise((resolve, reject) => {
+    this.find((err, docs) => {
+      if(err) {
+        console.error(err);
+        return reject(err);
+      }
+      resolve(docs);
+    });
+  });
+}*/
+
 var Textbook = mongoose.model('Textbook', TextbookSchema);
 module.exports = Textbook;
 

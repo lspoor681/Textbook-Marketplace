@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var Textbook = require('../models/textbook');
+//var Report = 
 var path = require('path');
 
 
@@ -63,6 +64,11 @@ router.post('/', function (req, res, next) {
   }
 });
 
+/*router.post('/marketplace', function(req, res, next) {
+  var search = req.body.Search;
+  Textbook.find({title : search});
+});*/
+
 router.post('/postText', function (req, res, next) {
   if (req.body.title &&
     req.body.author &&
@@ -70,28 +76,27 @@ router.post('/postText', function (req, res, next) {
     req.body.price &&
     req.body.make) {
 
-    var textbookData = {
-      title: req.body.title,
-      author: req.body.author,
-      isbn: req.body.isbn,
-      price: req.body.price,
-      make: req.body.make,
-    }
-
-    Textbook.create(textbookData, function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        return res.redirect('/marketplace');
+      var textbookData = {
+        title: req.body.title,
+        author: req.body.author,
+        isbn: req.body.isbn,
+        price: req.body.price,
+        make: req.body.make,
       }
-    });
-  }else{ return res.redirect('/marketplace');}
+
+      Textbook.create(textbookData, function (error, user) {
+        if (error) {
+          return next(error);
+        } else {
+          return res.redirect('/marketplace');
+        }
+      });
+  }else{ return res.redirect('/marketplace'); }
 });
 
 // GET route after registering
 router.get('/marketplace', function (req, res, next) {
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
+  User.findById(req.session.userId).exec(function (error, user) {
       if (error) {
         return next(error);
       } else {
@@ -100,10 +105,16 @@ router.get('/marketplace', function (req, res, next) {
           err.status = 400;
           return next(err);
         } else {
-          return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user});
+          Textbook.find().exec(function (error, textbooks) {
+            if (error) {
+              return next(error);
+            }else{
+              return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user , textbooks});
+            }
+          });
         }
       }
-    });
+  });
 });
 
 router.get('/postText', function (req, res, next) {

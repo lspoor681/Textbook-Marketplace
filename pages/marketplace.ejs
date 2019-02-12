@@ -3,63 +3,75 @@
   <head>
     <title>Textbook Market</title>
     <style>
-        h1   {text-align: center}
-        /* The navbar container */
-        .topnav {
-            overflow: hidden;
-            background-color: #333;
-        }
+      h1   {text-align: center}
+      /* The navbar container */
+      .topnav {
+          overflow: hidden;
+          background-color: #333;
+      }
 
-    /* Navbar links */
-    .topnav a {
-        float: left;
-        display: block;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
+      /* Navbar links */
+      .topnav a {
+          float: left;
+          display: block;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+      }
 
-    /* Links - change color on hover */
-    .topnav a:hover {
-        background-color: #ddd;
-        color: black;
-    }
-    .topnav input[type=text] {
-        float: right;
-        padding: 6px;
-        border: none;
-        margin-top: 8px;
-        margin-right: 12px;
-        font-size: 17px;
-    }
-    th {
-        text-align: left;
-    }
+      /* Links - change color on hover */
+      .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+      }
+      .topnav input[type=text] {
+          float: right;
+          padding: 6px;
+          border: none;
+          margin-top: 8px;
+          margin-right: 12px;
+          font-size: 17px;
+      }
+      th {
+          text-align: left;
+      }
+
+      table, td {
+        border: 1px solid black;
+      }
     </style>
   </head>
   <body>
           <div class="topnav">
               <a href="/marketplace">Home</a>
               <a href="/postText">Post</a>
-              <input align = "right" type="text" placeholder="Search Textbook..">
+              <input align = "right" type="text" name="Search" placeholder="Search for Textbook...">
           </div>
-
-          <br><span>Welcome <%= User.username %></span><br><br>
           
-          <table style="width:100%" align-text="left">
-              <tr>
-                  <th>Post ID</th>
-                  <th>Textbook Name</th>
-                  <th>Edition</th>
-              </tr>
-              <tr>
-                  <td>14213</td>
-                  <td>Calculus III (Undergraduate Texts in Mathematics)</td>
-                  <td>2</td>
-                  <td><a href="/textbook"> Click Here</a></td>
-              </tr>
-          </table>
+          <h3> Welcome <%= User.username%> </h3>
 
+          <% var i; var textid; %>
+
+          <table style="width:100%" align-text="left" id="textbooktable">
+              <tr>
+                  <th>Author</th>
+                  <th>Textbook Title</th>
+                  <th>ISBN</th>
+                  <th>Make</th>
+                  <th>Price</th>
+              </tr>
+              <% for(i = 0; i < textbooks.length; i++){ %>
+              <tr>
+                <div name="textID" data-value="<% textbooks[i]._id %>"></div>
+                <td><%= textbooks[i].author %></td>
+                <td><a href="/textbook"> <%= textbooks[i].title %></a></td>
+                <td><%= textbooks[i].isbn %></td>
+                <td><%= textbooks[i].make %></td>
+                <td><%= textbooks[i].price %></td>
+              </tr>
+              <% } %>
+ 
+          </table>
   </body>
 </html>
