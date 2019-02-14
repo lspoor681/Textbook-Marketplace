@@ -46,7 +46,10 @@
           <div class="topnav">
               <a href="/marketplace">Home</a>
               <a href="/postText">Post</a>
-              <input align = "right" type="text" name="Search" placeholder="Search for Textbook...">
+              <form id = "searchForm">
+                <input id = "search-bar" align = "right" type="text" name="Search" placeholder="Search for Textbook..." action="/marketplace/" method="post">
+                <button type = "submit" align = "right">Submit </button>
+              </form>
           </div>
           
           <h3> Welcome <%= User.username%> </h3>
