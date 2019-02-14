@@ -108,7 +108,25 @@ router.get('/marketplace', function (req, res, next) {
           Textbook.find().exec(function (error, textbooks) {
             if (error) {
               return next(error);
-            }else{
+            }
+            let userInput = req.query.Search;
+            //console.log(userInput);
+            if (typeof userInput !== 'undefined'){
+              console.log(userInput);
+              if (!isNaN(parseFloat(userInput))){
+              textbooks = textbooks.filter(element => element.isbn.includes(userInput));
+              }
+              //console.log(typeof textbooks.filter(element => element.author.includes(userInput)))
+              else if ((textbooks.filter(element => element.author.toLowerCase().includes(userInput.toLowerCase()))).length != 0)
+              textbooks = textbooks.filter(element => element.author.toLowerCase().includes(userInput.toLowerCase()));
+
+              else {
+              textbooks = textbooks.filter(element => element.title.toLowerCase().includes(userInput.toLowerCase()));
+              }
+              //console.log(userInput);
+              return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user , textbooks});
+            }
+            else if (typeof userInput === 'undefined'){
               return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user , textbooks});
             }
           });
