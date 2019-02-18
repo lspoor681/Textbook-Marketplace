@@ -70,10 +70,11 @@ router.post('/', function (req, res, next) {
 });*/
 
 router.post('/postText', function (req, res, next) {
+
   if (req.body.title &&
     req.body.author &&
     req.body.isbn &&
-    req.body.price &&
+    req.body.price > 0 &&
     req.body.make) {
 
       var textbookData = {
@@ -91,7 +92,9 @@ router.post('/postText', function (req, res, next) {
           return res.redirect('/marketplace');
         }
       });
-  }else{ return res.redirect('/marketplace'); }
+  }
+  else if (req.body.price.value < 0) {window.alert('Please enter a price greater or equal than 0');}
+  else{ return res.redirect('/marketplace'); }
 });
 
 // GET route after registering
