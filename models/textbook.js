@@ -4,6 +4,7 @@ var TextbookSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    unique: false,
     trim: true
   },
   author: {
@@ -22,20 +23,12 @@ var TextbookSchema = new mongoose.Schema({
   make: {
     type: String,
     required: true
+  },
+  seller: {
+    type: String,
+    required: false
   }
 });
-
-/*TextbookSchema.statics.getTextbooks = function(){
-  return new Promise((resolve, reject) => {
-    this.find((err, docs) => {
-      if(err) {
-        console.error(err);
-        return reject(err);
-      }
-      resolve(docs);
-    });
-  });
-}*/
 
 var Textbook = mongoose.model('Textbook', TextbookSchema);
 module.exports = Textbook;

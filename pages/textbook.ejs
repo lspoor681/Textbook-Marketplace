@@ -39,20 +39,29 @@
   <body>
           <div class="topnav">
               <a href="/marketplace">Home</a>
+              <a href="/postText">Post</a>
+              <a href="/report">Report</a>
               <a href="/logout">Logout</a>
-              <input align = "right" type="text" placeholder="Search Textbook..">
+            <form id = "searchForm" action="/marketplace">
+              <div class="search">
+                <input id = "search-bar" type="text" name="Search" placeholder="Search for Textbook..." action="/marketplace" method="get">
+                <button type = "submit">Search</button>
+              </div>
+            </form> 
           </div>
-          <h1>Calculus III (Undergraduate Texts in Mathematics) 2nd Edition</h1>
+
+          <h3> Welcome <%= User.username %> </h3>
+
+          <h1> <%= Textbook.title %> </h1>
           <p><IMG src="textbook.jpg"></p>
-          <p>ISBN-13: 978-0387909851</p>
-          <p>ISBN-10: 9780387909851</p>
-          <p>Price: $100.00</p>
+          <p> <%= Textbook.isbn %> </p>
+          <p> <%= Textbook.price %> </p>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
     <input type="hidden" name="cmd" value="_xclick">
     <input type="hidden" name="business" value="ifejzic@syr.edu">
     <input type="hidden" name="item_name" value="Textbook">
     <input type="hidden" name="item_number" value="1">
-    <input type="hidden" name="amount" value="100.00">
+    <input type="hidden" name="amount" value="<%= Textbook.price %>">
     <input type="hidden" name="no_shipping" value="0">
     <input type="hidden" name="no_note" value="1">
     <input type="hidden" name="currency_code" value="USD">

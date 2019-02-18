@@ -41,6 +41,7 @@
   <body>
           <div class="topnav">
               <a href="/marketplace">Home</a>
+              <a href="/logout">Logout</a>
               <input align = "right" type="text" placeholder="Search Textbook..">
           </div>
 
@@ -48,7 +49,7 @@
             <h1>Submit Textbook for Sale!</h1>
 
             <div class="text-submit-form">
-              <form id="login" action="/postText" method="post" onsubmit="//event.preventDefault();">
+              <form id="postNewText" action="/postText" method="post">
                 <input type="text" name="title" placeholder="Title" required=""> <br>
                 <input type="text" name="author" placeholder="Author" required=""> <br>
                 <input type="text" name="isbn" placeholder="ISBN-10" required=""> <br>

@@ -33,11 +33,8 @@
           margin-right: 12px;
           font-size: 17px;
       }
-      .search{
-        float: right;
-      }
       th {
-          text-align: center;
+          text-align: left;
       }
 
       table, td {
@@ -50,15 +47,13 @@
               <a href="/marketplace">Home</a>
               <a href="/postText">Post</a>
               <a href="/report">Report</a>
-              <a href="/profile">Profile</a>
               <a href="/logout">Logout</a>
-            <form id = "searchForm">
-              <div class="search">
-                <input id = "search-bar" type="text" name="Search" placeholder="Search for Textbook..." action="/marketplace" method="get">
-              </div>
+            <form action="/search" method="post">
+              <input align="right" type="text" name="Search" placeholder="Search for Textbook...">
+              <button type="submit">Search</button>
             </form> 
           </div>
-
+          
           <h3> Welcome <%= User.username %> </h3>
 
           <table style="width:100%" align-text="center" id="textbooktable">
@@ -69,19 +64,18 @@
                   <th>Make</th>
                   <th>Price</th>
               </tr>
-              <% for(var i = 0; i < textbooks.length; i++){ %>
+              <% for(i = 0; i < textbooks.length; i++){ %>
+              <% if(textbook[i].title.includes(search)) { %>
               <tr>
+                <span name="textID" data-value="<% textbooks[i]._id %>"></span>
                 <td><%= textbooks[i].author %></td>
-                <td>
-                  <form method="POST">
-                    <a href="/textbook?textid=<%= textbooks[i]._id %>"> <%= textbooks[i].title %> </a>
-                </td>
+                <td><a href="/textbook"> <%= textbooks[i].title %></a></td>
                 <td><%= textbooks[i].isbn %></td>
                 <td><%= textbooks[i].make %></td>
                 <td><%= textbooks[i].price %></td>
-              </tr>
+              </tr><% } %>
               <% } %>
- 
+
           </table>
   </body>
 </html>
