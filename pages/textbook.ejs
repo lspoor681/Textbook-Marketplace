@@ -50,6 +50,9 @@
           </div>
 
           <h1> <%= Textbook.title %> </h1>
+          <form id="report" action="/report?textid=<%= Textbook._id %>">
+            <input type="submit" value="Report">
+          </form>
           <p><IMG src="textbook.jpg"></p>
           <p> <%= Textbook.isbn %> </p>
           <p> <%= Textbook.price %> </p>

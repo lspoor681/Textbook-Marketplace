@@ -163,10 +163,11 @@ router.get('/textbook', function (req, res, next) {
               return next(error);
             }else {
               User.findById(textbook.seller).exec(function (error, seller) {
+                console.log(seller);
                 if (error) {
                   return next(error);
                 } else {
-                  return res.render(path.join(__dirname + '/../pages/textbook.ejs') , { User : user , Textbook : textbook , Seller : user });
+                  return res.render(path.join(__dirname + '/../pages/textbook.ejs') , { User : user , Textbook : textbook , Seller : seller });
                 }
               });
             }
