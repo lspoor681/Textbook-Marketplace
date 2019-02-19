@@ -40,7 +40,9 @@
           <div class="topnav">
               <a href="/marketplace">Home</a>
               <a href="/postText">Post</a>
-              <a href="/report">Report</a>
+              <% if(User.admin) { %>
+                <a href="/reports">Report</a>
+              <% } %>
               <a href="/logout">Logout</a>
             <form id = "searchForm" action="/marketplace">
               <div class="search">
@@ -50,14 +52,18 @@
           </div>
 
           <h1> <%= Textbook.title %> </h1>
-          <form id="report" action="/report?textid=<%= Textbook._id %>">
-            <input type="submit" value="Report">
+          <a href="/createReport?textid=<%= Textbook._id %>">Report</a>
           </form>
           <p><IMG src="textbook.jpg"></p>
           <p> <%= Textbook.isbn %> </p>
           <p> <%= Textbook.price %> </p>
           <p> Being sold by <%= Seller.username %> </p>
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+        <form id="buy" action="/textbook?textid=<%= Textbook._id %>" method="post">
+          <input type="submit" name="buy" value="BUY">
+        </form>
+    <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+      <input type="hidden" name="return" value="/textbook">
+      <input type="hidden" name="rm" value="2">
       <input type="hidden" name="cmd" value="_xclick">
       <input type="hidden" name="business" value="<%= Seller.email %>">
       <input type="hidden" name="item_name" value="Textbook">
@@ -70,6 +76,6 @@
       <input type="hidden" name="bn" value="PP-BuyNowBF">
       <p><input type="image" src="https://www.paypal.com/en_AU/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online."></p>
       <p><img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1"></p>
-    </form>
+    </form>-->
   </body>
 </html>

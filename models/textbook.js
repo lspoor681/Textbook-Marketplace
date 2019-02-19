@@ -33,10 +33,10 @@ var TextbookSchema = new mongoose.Schema({
 });
 
 TextbookSchema.path('price').get(function(x) {
-  return (x/100).toFixed(2);
+  return parseFloat(Math.round(x * 100) / 100).toFixed(2);
 });
 TextbookSchema.path('price').set(function(x) {
-  return x * 100;
+  return(x);
 });
 
 var Textbook = mongoose.model('Textbook', TextbookSchema);

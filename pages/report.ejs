@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Textbook Market</title>
+    <style>
+        h1, h2, h3  {text-align: center}
+        p   {text-align: center}
+        /* The navbar container */
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+    /* Navbar links */
+    .topnav a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    /* Links - change color on hover */
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+    .topnav input[type=text] {
+        float: right;
+        padding: 6px;
+        border: none;
+        margin-top: 8px;
+        margin-right: 12px;
+        font-size: 17px;
+    }
+    </style>
+  </head>
+  <body>
+        <div class="topnav">
+            <a href="/marketplace">Home</a>
+            <a href="/postText">Post</a>
+            <% if(User.admin) { %>
+                <a href="/reports">Report</a>
+            <% } %>
+            <a href="/logout">Logout</a>
+          <form id = "searchForm" action="/marketplace">
+            <div class="search">
+              <input id = "search-bar" type="text" name="Search" placeholder="Search for Textbook..." action="/marketplace" method="get">
+            </div>
+          </form> 
+        </div>
+
+          <h1> <%= Report.buyer %> has filed a report on <%= Report.seller %> </h1>
+          <h2> for the post regarding <%= Report.textbook %> </h2>
+          <br><br>
+          <h3> <%= Report.description %> </h3>
+          <br><br>
+          <form id="modReportStatus" action="/report?reportid=<%= Report._id %>" method="post" style="text-align: center">
+            <select name="status" required="">
+                <option value="<%= Report.status %>"> <%= Report.status %> </option>
+                <option value="In-Progress">In-Progress</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Terminated">Terminated</option>
+            </select> <br>
+            <input type="submit" value="Submit">
+          </form>
+  </body>
+</html>

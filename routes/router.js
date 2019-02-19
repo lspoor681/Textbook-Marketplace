@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var Textbook = require('../models/textbook');
-//var Report = 
+var Report = require('../models/report');
 var path = require('path');
 
 var textID;
@@ -100,7 +100,7 @@ router.get('/textbookModify', function (req, res, next) {
                 if (error) {
                   return next(error);
                 } else {
-                  return res.render(path.join(__dirname + '/../pages/textbookModify.ejs') , { User : user , Textbook : textbook , Seller : user });
+                  return res.render(path.join(__dirname + '/../pages/textbookmodify.ejs') , { User : user , Textbook : textbook , Seller : user });
                 }
               });
             }
@@ -163,7 +163,6 @@ router.get('/textbook', function (req, res, next) {
               return next(error);
             }else {
               User.findById(textbook.seller).exec(function (error, seller) {
-                console.log(seller);
                 if (error) {
                   return next(error);
                 } else {
@@ -177,7 +176,9 @@ router.get('/textbook', function (req, res, next) {
     });
 });
 
-router.get('/report', function (req, res, next) {
+router.get('/createReport', function (req, res, next) {
+  //console.log(req.query);
+  //return res.render(path.join(__dirname + '/../pages/createreport.ejs'));
   User.findById(req.session.userId)
     .exec(function (error, user) {
       if (error) {
@@ -188,7 +189,67 @@ router.get('/report', function (req, res, next) {
           err.status = 400;
           return next(err);
         } else {
-          return res.sendFile(path.join(__dirname + '/../pages/report.html'));
+          Textbook.findById(req.query.textid).exec(function (error, textbook) {
+            if (error) {
+              return next(error);
+            }else {
+              User.findById(textbook.seller).exec(function (error, seller) {
+                if (error) {
+                  return next(error);
+                } else {
+                  return res.render(path.join(__dirname + '/../pages/createreport.ejs') , { User : user , Textbook : textbook , Seller : seller });
+                }
+              });
+            }
+          });
+        }
+      }
+    });
+});
+
+router.get('/reports', function (req, res, next) {
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null || !user.admin) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return next(err);
+        } else {
+          Report.find().exec(function (error, reports) {
+            if (error) {
+              return next(error);
+            }else {
+              return res.render(path.join(__dirname + '/../pages/reports.ejs'), { reports });
+            }
+          });
+        }
+      }
+    });
+});
+
+router.get('/report', function (req, res, next) { 
+  User.findById(req.session.userId).exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return next(err);        
+        } else {
+          Report.findById(req.query.reportid).exec(function (error, report) {
+            if (error) {
+              return next(error);
+            } else if(report.status == "Resolved" || report.status == "Terminated") {
+              //alertMessage("This report has been " + report.status);
+              return res.redirect('/reports');
+            } else {
+              return res.render(path.join(__dirname + '/../pages/report.ejs'), { Report : report });            
+            }
+          });
         }
       }
     });
@@ -261,6 +322,16 @@ router.post('/marketplace', function (req, res, next){
 
 });
 
+router.post('/textbook', function (req, res, next){
+  Textbook.findByIdAndRemove(req.query.textid, function(error) {
+    if(error){
+      return next(error);
+    } else {
+      return res.redirect('/marketplace');
+    }
+  });
+});
+
 router.post('/postText', function (req, res, next) {
   if (req.body.title &&
     req.body.author &&
@@ -289,16 +360,15 @@ router.post('/postText', function (req, res, next) {
 });
 
 router.post('/textbookModify', function (req, res, next) {
-  if(req.body.submit === "Delete"){
+  if(req.body.submit === "delete"){
     Textbook.findByIdAndRemove(req.query.textid, function(error) {
       if(error){
         return next(error);
       } else {
-        return res.redirect("/profile");
+        return res.redirect('/profile');
       }
     });
-  }
-  if(req.body.submit === "Modify"){
+  } else if(req.body.submit === "modify"){
     var textbookData = {
         title: req.body.title,
         author: req.body.author,
@@ -312,11 +382,48 @@ router.post('/textbookModify', function (req, res, next) {
         if(error){
         return next(error);
       } else {
-        return res.redirect("/profile");
+        return res.redirect('/profile');
       }
       });
   } else {
-    return res.redirect("/profile");
+    return res.redirect('/profile');
+  }
+});
+
+router.post('/reports', function(req, res, next) {
+
+});
+
+router.post('/createReport', function(req, res, next) {
+  if(req.body.description){
+    var reportData = {
+      textbook: req.body.textbook,
+      seller: req.body.seller,
+      buyer: req.body.buyer,
+      description: req.body.description,
+    }
+
+    Report.create(reportData, function (error, report) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.redirect('/marketplace');
+      }
+    });
+  } else {
+    res.redirect('/marketplace');
+  }
+});
+
+router.post('/report', function(req, res, next) {
+  if(req.body.status){
+    Report.findByIdAndUpdate(req.query.reportid, { status: req.body.status }, function(error) {
+      if(error){
+        return next(error);
+      } else {
+        return res.redirect('/reports');
+      }
+    });
   }
 });
 

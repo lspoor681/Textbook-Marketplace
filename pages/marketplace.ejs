@@ -49,7 +49,9 @@
           <div class="topnav">
               <a href="/marketplace">Home</a>
               <a href="/postText">Post</a>
-              <a href="/report">Report</a>
+              <% if(User.admin) { %>
+                <a href="/reports">Report</a>
+              <% } %>
               <a href="/profile">Profile</a>
               <a href="/logout">Logout</a>
             <form id = "searchForm">
@@ -73,7 +75,7 @@
               <tr>
                 <td><%= textbooks[i].author %></td>
                 <td>
-                  <form method="POST">
+                  <form method="get">
                     <a href="/textbook?textid=<%= textbooks[i]._id %>"> <%= textbooks[i].title %> </a>
                 </td>
                 <td><%= textbooks[i].isbn %></td>
