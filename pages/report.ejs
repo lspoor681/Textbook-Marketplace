@@ -41,7 +41,7 @@
             <a href="/marketplace">Home</a>
             <a href="/postText">Post</a>
             <% if(User.admin) { %>
-                <a href="/reports">Report</a>
+                <a href="/reports">Reports</a>
             <% } %>
             <a href="/logout">Logout</a>
           <form id = "searchForm" action="/marketplace">
@@ -56,14 +56,23 @@
           <br><br>
           <h3> <%= Report.description %> </h3>
           <br><br>
-          <form id="modReportStatus" action="/report?reportid=<%= Report._id %>" method="post" style="text-align: center">
-            <select name="status" required="">
-                <option value="<%= Report.status %>"> <%= Report.status %> </option>
-                <option value="In-Progress">In-Progress</option>
-                <option value="Resolved">Resolved</option>
-                <option value="Terminated">Terminated</option>
-            </select> <br>
-            <input type="submit" value="Submit">
-          </form>
+
+          <% if(Report.status == "Pending" || Report.status == "In-Progress") { %>
+
+            <form id="modReportStatus" action="/requiredport?reportid=<%= Report._id %>" method="post" style="text-align: center">
+              <select name="status" required="">
+                  <option value="<%= Report.status %>"> <%= Report.status %> </option>
+                  <option value="In-Progress">In-Progress</option>
+                  <option value="Resolved">Resolved</option>
+                  <option value="Terminated">Terminated</option>
+              </select> <br>
+              <input type="submit" value="Submit">
+            </form>
+
+          <% } else { %>
+
+            <h3>This report has been <%= Report.status %></h3>
+
+          <% } %>
   </body>
 </html>

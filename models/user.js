@@ -46,18 +46,6 @@ UserSchema.statics.authenticate = function (email, password, callback) {
     });
 }
 
-/*UserSchema.statics.getUsers = function(){
-  return new Promise((resolve, reject) => {
-    this.find((err, docs) => {
-      if(err) {
-        console.error(err);
-        return reject(err);
-      }
-      resolve(docs);
-    });
-  });
-}*/
-
 //hashing a password before saving it to the database
 UserSchema.pre('save', function (next) {
   var user = this;

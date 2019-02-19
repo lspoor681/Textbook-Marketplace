@@ -3,45 +3,61 @@
   <head>
     <title>Textbook Market</title>
     <style>
-        h1   {text-align: center}
-        p   {text-align: center}
-        /* The navbar container */
-        .topnav {
-            overflow: hidden;
-            background-color: #333;
-        }
+      h1   { text-align: center;color:maroon; }
+      p   { text-align: center;color:maroon; }
+      body{ background-color: maroon !important; }
+      /* The navbar container */
+      .topnav {
+          overflow: hidden;
+          background-color: #333;
+      }
 
-    /* Navbar links */
-    .topnav a {
-        float: left;
-        display: block;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
+      /* Navbar links */
+      .topnav a {
+          float: left;
+          display: block;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+      }
 
-    /* Links - change color on hover */
-    .topnav a:hover {
-        background-color: #ddd;
+      /* Links - change color on hover */
+      .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+      }
+      .topnav input[type=text] {
+          float: right;
+          padding: 6px;
+          border: none;
+          margin-top: 8px;
+          margin-right: 12px;
+          font-size: 17px;
+      }
+      .modify {
+        background-color: white;
+        border-style: solid;
         color: black;
-    }
-    .topnav input[type=text] {
-        float: right;
-        padding: 6px;
-        border: none;
-        margin-top: 8px;
-        margin-right: 12px;
-        font-size: 17px;
-    }
+        width:500px;
+        margin-left:520px;
+        margin-top:130px;
+        padding:15px;
+      }
+      .btn {
+        background-color:maroon !important;
+        color:white !important;
+      }
+
     </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
           <div class="topnav">
               <a href="/marketplace">Home</a>
               <a href="/postText">Post</a>
               <% if(User.admin) { %>
-                <a href="/reports">Report</a>
+                <a href="/reports">Reports</a>
               <% } %>
               <a href="/logout">Logout</a>
             <form id = "searchForm" action="/marketplace">
@@ -50,20 +66,27 @@
               </div>
             </form> 
           </div>
-        <form id="delete/modify" action="/textbookModify?textid=<%= Textbook._id %>" method="post">
-          <input type="text" name="title" placeholder="<%= Textbook.title %>" value="<%= Textbook.title %>"> <br>
-          <input type="text" name="author" placeholder="<%= Textbook.author %>" value="<%= Textbook.author %>"> <br>
-          <input type="text" name="isbn" minlength="10" maxlength="13" placeholder="<%= Textbook.isbn %>" value="<%= Textbook.isbn %>"> <br>
-          <input type="number" id="price" name="price" step="0.01" min="0.00" maxlength="10" placeholder="<%= Textbook.price %>" value="<%= Textbook.price %>"> <br>
-          <select name="make">
-                  <option value="<%= Textbook.make %>"><%= Textbook.make.charAt(0).toUpperCase() + Textbook.make.substr(1) %></option>
-                  <option value="Not Specified">Not Specified</option>
-                  <option value="hardcover">Hardcover</option>
-                  <option value="paperback">Paperback</option>
-                </select> <br><br>
-            <input type="submit" name="submit" value="delete" onclick="return confirm('Are you sure you want to delete this item?')" action="/profile"> <br>
-            <input type="submit" name="submit" value="modify" onclick="return confirm('Are yo sure you want to modify this item?')">
-          </form>
 
+        <div class="modify" align="center">
+          <h1> Modify or Delete your Textbook Post </h1>
+          <br>
+          <form id="delete/modify" action="/textbookModify?textid=<%= Textbook._id %>" method="post">
+            <p> Title: <input type="text" name="title" placeholder="<%= Textbook.title %>" value="<%= Textbook.title %>"> </p>
+            <p> Author: <input type="text" name="author" placeholder="<%= Textbook.author %>" value="<%= Textbook.author %>"> </p>
+            <p> ISBN: <input type="text" name="isbn" minlength="10" maxlength="13" placeholder="<%= Textbook.isbn %>" value="<%= Textbook.isbn %>"> </p>
+            <p> Price: <input type="number" id="price" name="price" step="0.01" min="0.00" maxlength="10" placeholder="<%= Textbook.price %>" value="<%= Textbook.price %>"> </p>
+            <select name="make">
+                    <option value="<%= Textbook.make %>"><%= Textbook.make.charAt(0).toUpperCase() + Textbook.make.substr(1) %></option>
+                    <option value="Not Specified">Not Specified</option>
+                    <option value="hardcover">Hardcover</option>
+                    <option value="paperback">Paperback</option>
+            </select> <br><br>
+            <input type="submit" name="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')" action="/profile"> <br>
+            <input type="submit" name="submit" value="Modify" onclick="return confirm('Are yo sure you want to modify this item?')">
+            </form>
+          </div>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>

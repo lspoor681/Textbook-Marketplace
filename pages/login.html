@@ -2,24 +2,56 @@
 <html>
   <head>
     <title>Textbook Market</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      body {margin-top: 100px;
+            background-color:maroon;}
+      .login {
+        background-color: white;
+        color: black;
+        width:500px;
+        margin-left:520px;
+        padding:15px;
+      }
+      h1{ text-align:center; color:maroon; }
+      h2{ text-align:center; color:white; font-size:60px; }
+      input[type=password] {
+        border: 2px solid maroon;
+        border-radius: 4px;
+      }
+      input[type=E-mail] {
+        border: 2px solid maroon;
+        border-radius: 4px;
+      }
+      .btn {
+            background-color:maroon;
+            color:white;
+          }
+      div{ color:maroon; }
+
+    </style>
   </head>
-  <body>        
+  <body>
+    <h2>Textbook Marketplace</h2>
+    <br><br>
+        <div class="login" align="center">
           <div class="signin-form" align="center">
             <h1>Login</h1>
-        
+
             <div class="login-form">
               <form action="/" method="post">
                 <input type="E-mail" name="logemail" placeholder="E-mail" required=""> <br>
                 <input type="password" name="logpassword" id="password" placeholder="Password" required=""> <br>
                 <input type="checkbox" onclick="showPass()">Show Password <br>
                 <div class="tp">
-                  <br><button type="submit">LOGIN NOW</button>
+                  <br>
+                  <button class="btn btn-default btn-lg" type="submit">LOGIN NOW</button>
                 </div>
-                <br><br>Don't have an account yet? <a href="/register">Create New Account</a><br>
+                <br>Don't have an account yet? <a href="/register">Create New Account</a><br>
               </form>
            </div>
          </div>
-
+      </div>
     <script type="text/javascript">
       function showPass() {
       var x = document.getElementById("password");
@@ -27,9 +59,11 @@
           x.type = "text";
         } else {
          x.type = "password";
-        } 
+        }
       }
     </script>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>

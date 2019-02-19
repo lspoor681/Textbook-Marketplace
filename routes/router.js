@@ -7,7 +7,9 @@ var path = require('path');
 
 var textID;
 
-// GET route for reading data
+// GET routes for reading data
+
+//Base page will either send to login page, or if user has already logged in and has session in progress will return them to main marketplace
 router.get('/', function (req, res, next) {
   User.findById(req.session.userId)
     .exec(function (error, user) {
@@ -23,40 +25,40 @@ router.get('/', function (req, res, next) {
     });
 });
 
+//Simple redirect to register page
 router.get('/register', function (req, res, next) {
   return res.sendFile(path.join(__dirname + '/../pages/register.html'));
 });
 
-// GET route after registering or logging in
+//Main marketplace page
 router.get('/marketplace', function (req, res, next) {
-  User.findById(req.session.userId).exec(function (error, user) {
-      if (error) {
-        return next(error);
+  User.findById(req.session.userId).exec(function (error, user) {   //Parse current user by the session userId
+      if (error) {                                                  //Error protection
+        return next(error);   
       } else {
-        if (user === null) {
+        if (user === null) {                                        //If user is not currently in session return not authorized
           var err = new Error('Not authorized! Go back!');
           err.status = 400;
           return next(err);
         } else {
-          Textbook.find().exec(function (error, textbooks) {
+          Textbook.find().exec(function (error, textbooks) {        //Parse all textbooks in database
             if (error) {
-              return next(error);
+              return next(error);                                   //Error protection
             }
-            let userSearch = req.query.Search;
-            if (typeof userSearch !== 'undefined'){
-              //console.log(userSearch);
+            let userSearch = req.query.Search;                      //Recieve search querey from marketplace search input (Default is null)
+            if (typeof userSearch !== 'undefined'){                 //Check if undefined, and will handel undefined error
               if (!isNaN(parseFloat(userSearch))){
-              textbooks = textbooks.filter(element => element.isbn.includes(userSearch));
+                textbooks = textbooks.filter(element => element.isbn.includes(userSearch));   //Filter by isbn
               }
               else if ((textbooks.filter(element => element.author.toLowerCase().includes(userSearch.toLowerCase()))).length != 0)
-              textbooks = textbooks.filter(element => element.author.toLowerCase().includes(userSearch.toLowerCase()));
+                textbooks = textbooks.filter(element => element.author.toLowerCase().includes(userSearch.toLowerCase()));   //Filter by author
               else {
-              textbooks = textbooks.filter(element => element.title.toLowerCase().includes(userSearch.toLowerCase()));
+                textbooks = textbooks.filter(element => element.title.toLowerCase().includes(userSearch.toLowerCase()));    //Filter by title
               }
-              return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user , textbooks});
+              return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user , textbooks}); //Send back to marketplace with filtered textbook list by search input, as well as passing current user information
             }
             else{
-              return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user , textbooks});
+              return res.render(path.join(__dirname + '/../pages/marketplace.ejs'), {User : user , textbooks}); //Send back to marketplace without filtered textbook list by search input, as well as passing current user information
             }
           });
         }
@@ -64,9 +66,9 @@ router.get('/marketplace', function (req, res, next) {
   });
 });
 
+//Router to posttextbook webpage
 router.get('/postText', function (req, res, next) {
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
+  User.findById(req.session.userId).exec(function (error, user) {     //Parse current user by the session userId
       if (error) {
         return next(error);
       } else {
@@ -82,8 +84,7 @@ router.get('/postText', function (req, res, next) {
 });
 
 router.get('/textbookModify', function (req, res, next) {
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
+  User.findById(req.session.userId).exec(function (error, user) {     //Parse current user by the session userId
       if (error) {
         return next(error);
       } else {
@@ -111,7 +112,7 @@ router.get('/textbookModify', function (req, res, next) {
 });
 
 router.get('/profile', function (req, res, next) {
-  User.findById(req.session.userId).exec(function (error, user) {
+  User.findById(req.session.userId).exec(function (error, user) {     //Parse current user by the session userId
       if (error) {
         return next(error);
       } else {
@@ -148,8 +149,7 @@ router.get('/profile', function (req, res, next) {
 });
 
 router.get('/textbook', function (req, res, next) {
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
+  User.findById(req.session.userId).exec(function (error, user) {     //Parse current user by the session userId
       if (error) {
         return next(error);
       } else {
@@ -177,10 +177,7 @@ router.get('/textbook', function (req, res, next) {
 });
 
 router.get('/createReport', function (req, res, next) {
-  //console.log(req.query);
-  //return res.render(path.join(__dirname + '/../pages/createreport.ejs'));
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
+  User.findById(req.session.userId).exec(function (error, user) {     //Parse current user by the session userId
       if (error) {
         return next(error);
       } else {
@@ -208,8 +205,7 @@ router.get('/createReport', function (req, res, next) {
 });
 
 router.get('/reports', function (req, res, next) {
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
+  User.findById(req.session.userId).exec(function (error, user) {     //Parse current user by the session userId
       if (error) {
         return next(error);
       } else {
@@ -222,8 +218,24 @@ router.get('/reports', function (req, res, next) {
             if (error) {
               return next(error);
             }else {
-              return res.render(path.join(__dirname + '/../pages/reports.ejs'), { reports });
+              let userSearch = req.query.search;                      //Recieve search querey from report search input (Default is null)
+              if (typeof userSearch !== 'undefined'){                 //Check if undefined, and will handel undefined error
+                if (!isNaN(parseFloat(userSearch))){
+                  reports = reports.filter(element => element._id.includes(userSearch));   //Filter by isbn
+                }
+                else if ((reports.filter(element => element.textbook.toLowerCase().includes(userSearch.toLowerCase()))).length != 0)
+                  reports = reports.filter(element => element.textbook.toLowerCase().includes(userSearch.toLowerCase()));   //Filter by textbook name
+                else if ((reports.filter(element => element.seller.toLowerCase().includes(userSearch.toLowerCase()))).length != 0)
+                  reports = reports.filter(element => element.seller.toLowerCase().includes(userSearch.toLowerCase()));    //Filter by seller username
+                else
+                  reports = reports.filter(element => element.buyer.toLowerCase().includes(userSearch.toLowerCase()));    //Filter by buyer username
+
+                return res.render(path.join(__dirname + '/../pages/reports.ejs'), { User : user , reports });
+              }else{
+                return res.render(path.join(__dirname + '/../pages/reports.ejs'), { User : user , reports });                
+              }
             }
+
           });
         }
       }
@@ -231,7 +243,7 @@ router.get('/reports', function (req, res, next) {
 });
 
 router.get('/report', function (req, res, next) { 
-  User.findById(req.session.userId).exec(function (error, user) {
+  User.findById(req.session.userId).exec(function (error, user) {     //Parse current user by the session userId
       if (error) {
         return next(error);
       } else {
@@ -243,11 +255,8 @@ router.get('/report', function (req, res, next) {
           Report.findById(req.query.reportid).exec(function (error, report) {
             if (error) {
               return next(error);
-            } else if(report.status == "Resolved" || report.status == "Terminated") {
-              //alertMessage("This report has been " + report.status);
-              return res.redirect('/reports');
             } else {
-              return res.render(path.join(__dirname + '/../pages/report.ejs'), { Report : report });            
+              return res.render(path.join(__dirname + '/../pages/report.ejs'), { User : user , Report : report });            
             }
           });
         }
@@ -255,7 +264,7 @@ router.get('/report', function (req, res, next) {
     });
 });
 
-// GET for logout logout
+// GET for logout
 router.get('/logout', function (req, res, next) {
   if (req.session) {
     // delete session object
@@ -360,7 +369,7 @@ router.post('/postText', function (req, res, next) {
 });
 
 router.post('/textbookModify', function (req, res, next) {
-  if(req.body.submit === "delete"){
+  if(req.body.submit === "Delete"){
     Textbook.findByIdAndRemove(req.query.textid, function(error) {
       if(error){
         return next(error);
@@ -368,7 +377,7 @@ router.post('/textbookModify', function (req, res, next) {
         return res.redirect('/profile');
       }
     });
-  } else if(req.body.submit === "modify"){
+  } else if(req.body.submit === "Modify"){
     var textbookData = {
         title: req.body.title,
         author: req.body.author,

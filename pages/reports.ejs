@@ -46,8 +46,13 @@
   <body>
     <div class = "topnav">
     <a href="/marketplace">Home</a>
+    <% if(User.admin) { %>
+      <a href="/reports">Reports</a>
+    <% } %>
     <a href="/logout">Logout</a>
-    <input align = "right" type="text" placeholder="Search Order by reportID...">  
+    <form name="search" action="/reports" method="get">
+      <input align = "right" name="search" type="text" placeholder="Search Order by reportID...">  
+    </form>
     </div>   
     <h1>Your Report Page</h1>
     <table style="width:100%" align-text="left">

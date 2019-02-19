@@ -32,6 +32,7 @@ var TextbookSchema = new mongoose.Schema({
   }
 });
 
+//Getter and Setter for price to force showing of 2 decimal places in our price, without rounding
 TextbookSchema.path('price').get(function(x) {
   return parseFloat(Math.round(x * 100) / 100).toFixed(2);
 });

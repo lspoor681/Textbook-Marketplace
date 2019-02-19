@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Textbook Market</title>
+    <title>Textbook</title>
     <style>
         h1   {text-align: center}
         p   {text-align: center}
@@ -35,13 +35,14 @@
         font-size: 17px;
     }
     </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
           <div class="topnav">
               <a href="/marketplace">Home</a>
               <a href="/postText">Post</a>
               <% if(User.admin) { %>
-                <a href="/reports">Report</a>
+                <a href="/reports">Reports</a>
               <% } %>
               <a href="/logout">Logout</a>
             <form id = "searchForm" action="/marketplace">
@@ -61,7 +62,7 @@
         <form id="buy" action="/textbook?textid=<%= Textbook._id %>" method="post">
           <input type="submit" name="buy" value="BUY">
         </form>
-    <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
       <input type="hidden" name="return" value="/textbook">
       <input type="hidden" name="rm" value="2">
       <input type="hidden" name="cmd" value="_xclick">
@@ -76,6 +77,9 @@
       <input type="hidden" name="bn" value="PP-BuyNowBF">
       <p><input type="image" src="https://www.paypal.com/en_AU/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online."></p>
       <p><img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1"></p>
-    </form>-->
+    </form>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
