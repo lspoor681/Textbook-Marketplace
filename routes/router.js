@@ -120,7 +120,7 @@ router.get('/profile', function (req, res, next) {
           err.status = 400;
           return next(err);
         } else {
-          Textbook.find({ seller : req.session.userId }).exec(function (error, textbooks) {
+          Textbook.find({ seller : user._id }).exec(function (error, textbooks) {
             if (error) {
               return next(error);
             } 
@@ -336,7 +336,7 @@ router.post('/postText', function (req, res, next) {
   if (req.body.title &&
     req.body.author &&
     req.body.isbn &&
-    req.body.price > 0 &&
+    req.body.price >= 0 &&
     req.body.make) {
 
       var textbookData = {
@@ -356,7 +356,7 @@ router.post('/postText', function (req, res, next) {
         }
       });
   }else if(req.body.price.value < 0){ window.alert("Please enter a price greater or equal than 0");
-} else { return res.redirect('/marketplace'); }
+  } else { return res.redirect('/marketplace'); }
 });
 
 router.post('/textbookModify', function (req, res, next) {
