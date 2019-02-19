@@ -48,18 +48,20 @@
               </div>
             </form> 
           </div>
-
-          <input type="text" align="center" placeholder="<%= Textbook.title %>" > <br>
-          <input type="text" name="isbn" minlength="10" maxlength="13" placeholder="<%= Textbook.isbn %>" required=""> <br>
-          <input type="number" name="price" step="0.01" min="0.00" maxlength="10" placeholder="<%= Textbook.price %>" required=""> <br>
+        <form id="delete/modify" action="/textbookModify?textid=<%= Textbook._id %>" method="post">
+          <input type="text" name="title" placeholder="<%= Textbook.title %>" value="<%= Textbook.title %>"> <br>
+          <input type="text" name="author" placeholder="<%= Textbook.author %>" value="<%= Textbook.author %>"> <br>
+          <input type="text" name="isbn" minlength="10" maxlength="13" placeholder="<%= Textbook.isbn %>" value="<%= Textbook.isbn %>"> <br>
+          <input type="number" id="price" name="price" step="0.01" min="0.00" maxlength="10" placeholder="<%= Textbook.price %>" value="<%= Textbook.price %>"> <br>
           <select name="make">
-                  <option value="<%= Textbook.make %>"><%= Textbook.make %></option>
+                  <option value="<%= Textbook.make %>"><%= Textbook.make.charAt(0).toUpperCase() + Textbook.make.substr(1) %></option>
                   <option value="Not Specified">Not Specified</option>
                   <option value="hardcover">Hardcover</option>
                   <option value="paperback">Paperback</option>
                 </select> <br><br>
-          <input type="submit" value="Delete"> <br>
-          <input type="submit" value="Submit">
-</form>
+            <input type="submit" name="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this item?')" action="/profile"> <br>
+            <input type="submit" name="submit" value="Modify" onclick="return confirm('Are yo sure you want to modify this item?')">
+          </form>
+
   </body>
 </html>

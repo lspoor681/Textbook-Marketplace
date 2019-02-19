@@ -10,11 +10,13 @@ var TextbookSchema = new mongoose.Schema({
   author: {
     type: String,
     required: false,
-    trim: true
+    unique: false,
+    trim: true,
   },
   isbn: {
     type: String,
     required: true,
+    unique: false,
   },
   price: {
     type: Number,
@@ -28,6 +30,13 @@ var TextbookSchema = new mongoose.Schema({
     type: String,
     required: false
   }
+});
+
+TextbookSchema.path('price').get(function(x) {
+  return (x/100).toFixed(2);
+});
+TextbookSchema.path('price').set(function(x) {
+  return x * 100;
 });
 
 var Textbook = mongoose.model('Textbook', TextbookSchema);

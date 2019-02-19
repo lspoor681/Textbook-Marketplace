@@ -9,7 +9,18 @@ var textID;
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
-  return res.sendFile(path.join(__dirname + '/../pages/login.html'));
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null) {
+          res.sendFile(path.join(__dirname + '/../pages/login.html'));
+        } else {
+          return res.redirect('/marketplace');
+        }
+      }
+    });
 });
 
 router.get('/register', function (req, res, next) {
@@ -22,7 +33,7 @@ router.get('/marketplace', function (req, res, next) {
       if (error) {
         return next(error);
       } else {
-        if (user == null) {
+        if (user === null) {
           var err = new Error('Not authorized! Go back!');
           err.status = 400;
           return next(err);
@@ -76,7 +87,7 @@ router.get('/textbookModify', function (req, res, next) {
       if (error) {
         return next(error);
       } else {
-        if (user == null) {
+        if (user === null) {
           var err = new Error('Not authorized! Go back!');
           err.status = 400;
           return next(err);
@@ -253,7 +264,7 @@ router.post('/postText', function (req, res, next) {
   if (req.body.title &&
     req.body.author &&
     req.body.isbn &&
-    req.body.price.value > 0 &&
+    req.body.price > 0 &&
     req.body.make) {
 
       var textbookData = {
@@ -269,7 +280,7 @@ router.post('/postText', function (req, res, next) {
         if (error) {
           return next(error);
         } else {
-          return res.redirect('/marketplace');
+          return res.redirect('/profile');
         }
       });
   }else if(req.body.price.value < 0){ window.alert("Please enter a price greater or equal than 0");
@@ -277,7 +288,35 @@ router.post('/postText', function (req, res, next) {
 });
 
 router.post('/textbookModify', function (req, res, next) {
-  
+  if(req.body.submit === "Delete"){
+    Textbook.findByIdAndRemove(req.query.textid, function(error) {
+      if(error){
+        return next(error);
+      } else {
+        return res.redirect("/profile");
+      }
+    });
+  }
+  if(req.body.submit === "Modify"){
+    var textbookData = {
+        title: req.body.title,
+        author: req.body.author,
+        isbn: req.body.isbn,
+        price: req.body.price,
+        make: req.body.make,
+        seller: req.session.userId,
+      }
+
+      Textbook.findByIdAndUpdate(req.query.textid, textbookData, function(error) {
+        if(error){
+        return next(error);
+      } else {
+        return res.redirect("/profile");
+      }
+      });
+  } else {
+    return res.redirect("/profile");
+  }
 });
 
 module.exports = router;
