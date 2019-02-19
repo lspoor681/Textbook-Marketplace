@@ -186,4 +186,30 @@ router.get('/logout', function (req, res, next) {
   }
 });
 
+//Search function for Reports
+router.get('/report', function (req, res, next) {
+  Textbook.findReport().exec(function (error, reports) {
+            if (error) {
+              return next(error);
+            }else{
+            }
+            let userInput = req.query.Search;
+            //console.log(userInput);
+            if (typeof userInput !== 'undefined'){
+              console.log(userInput);
+              if ((reports.filter(element => element.buyer.toLowerCase().includes(userInput.toLowerCase()))).length != 0)
+              reports = reports.filter(element => element.buyer.toLowerCase().includes(userInput.toLowerCase()));
+
+              else {
+              reports = reports.filter(element => element.seller.toLowerCase().includes(userInput.toLowerCase()));
+              }
+              //console.log(userInput);
+              return res.render(path.join(__dirname + '/../pages/ReportPage.html'), {Report : buyer , seller});
+            }
+            else if (typeof userInput === 'undefined'){
+              return res.render(path.join(__dirname + '/../pages/ReportPage.html'), {Report : buyer , seller});
+            }
+          });
+  });
+
 module.exports = router;
