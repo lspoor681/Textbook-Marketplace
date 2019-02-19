@@ -54,7 +54,6 @@
             <form id = "searchForm">
               <div class="search">
                 <input id = "search-bar" type="text" name="Search" placeholder="Search for Textbook..." action="/profile" method="get">
-                <button type = "submit">Search</button>
               </div>
             </form> 
           </div>
@@ -73,8 +72,7 @@
               <tr>
                 <td><%= textbooks[i].author %></td>
                 <td>
-                  <form method="POST">
-                    <a href="/textbook?textid=<%= textbooks[i]._id %>"> <%= textbooks[i].title %> </a>
+                  <a href="/textbookModify?textid=<%= textbooks[i]._id %>"> <%= textbooks[i].title %> </a>
                 </td>
                 <td><%= textbooks[i].isbn %></td>
                 <td><%= textbooks[i].make %></td>

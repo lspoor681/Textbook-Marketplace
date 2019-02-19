@@ -33,6 +33,14 @@
         margin-right: 12px;
         font-size: 17px;
     }
+    .topnav input[type=number] {
+        float: right;
+        padding: 6px;
+        border: none;
+        margin-top: 8px;
+        margin-right: 12px;
+        font-size: 17px;
+    }
     th {
         text-align: left;
     }
@@ -52,10 +60,11 @@
               <form id="postNewText" action="/postText" method="post">
                 <input type="text" name="title" placeholder="Title" required=""> <br>
                 <input type="text" name="author" placeholder="Author" required=""> <br>
-                <input type="text" name="isbn" placeholder="ISBN-10" required=""> <br>
-                <input type="text" name="price" placeholder="Price" required=""> <br>
+                <input type="text" name="isbn" minlength="10" maxlength="13" placeholder="ISBN-10" required=""> <br>
+                <input type="number" name="price" step="0.01" min="0.00" maxlength="10" placeholder="Price" required=""> <br>
                 <select name="make" required>
-                  <option value="">Not Specified</option>
+                  <option value=""></option>
+                  <option value="Not Specified">Not Specified</option>
                   <option value="hardcover">Hardcover</option>
                   <option value="paperback">Paperback</option>
                 </select> <br>

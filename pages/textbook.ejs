@@ -45,17 +45,15 @@
             <form id = "searchForm" action="/marketplace">
               <div class="search">
                 <input id = "search-bar" type="text" name="Search" placeholder="Search for Textbook..." action="/marketplace" method="get">
-                <button type = "submit">Search</button>
               </div>
             </form> 
           </div>
-
-          <h3> Welcome <%= User.username %> </h3>
 
           <h1> <%= Textbook.title %> </h1>
           <p><IMG src="textbook.jpg"></p>
           <p> <%= Textbook.isbn %> </p>
           <p> <%= Textbook.price %> </p>
+          <p> Being sold by <%= Seller.username %> </p>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
     <input type="hidden" name="cmd" value="_xclick">
     <input type="hidden" name="business" value="ifejzic@syr.edu">

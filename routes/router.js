@@ -22,7 +22,7 @@ router.get('/marketplace', function (req, res, next) {
       if (error) {
         return next(error);
       } else {
-        if (user === null) {
+        if (user == null) {
           var err = new Error('Not authorized! Go back!');
           err.status = 400;
           return next(err);
@@ -39,7 +39,6 @@ router.get('/marketplace', function (req, res, next) {
               }
               else if ((textbooks.filter(element => element.author.toLowerCase().includes(userSearch.toLowerCase()))).length != 0)
               textbooks = textbooks.filter(element => element.author.toLowerCase().includes(userSearch.toLowerCase()));
-
               else {
               textbooks = textbooks.filter(element => element.title.toLowerCase().includes(userSearch.toLowerCase()));
               }
@@ -66,6 +65,35 @@ router.get('/postText', function (req, res, next) {
           return next(err);
         } else {
           return res.sendFile(path.join(__dirname + '/../pages/posttextbook.html'));
+        }
+      }
+    });
+});
+
+router.get('/textbookModify', function (req, res, next) {
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user == null) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return next(err);
+        } else {
+          Textbook.findById(req.query.textid).exec(function (error, textbook) {
+            if (error) {
+              return next(error);
+            }else {
+              User.findById(textbook.seller).exec(function (error, seller) {
+                if (error) {
+                  return next(error);
+                } else {
+                  return res.render(path.join(__dirname + '/../pages/textbookModify.ejs') , { User : user , Textbook : textbook , Seller : user });
+                }
+              });
+            }
+          });
         }
       }
     });
@@ -123,9 +151,32 @@ router.get('/textbook', function (req, res, next) {
             if (error) {
               return next(error);
             }else {
-              return res.render(path.join(__dirname + '/../pages/textbook.ejs') , { User : user , Textbook : textbook });
+              User.findById(textbook.seller).exec(function (error, seller) {
+                if (error) {
+                  return next(error);
+                } else {
+                  return res.render(path.join(__dirname + '/../pages/textbook.ejs') , { User : user , Textbook : textbook , Seller : user });
+                }
+              });
             }
           });
+        }
+      }
+    });
+});
+
+router.get('/report', function (req, res, next) {
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return next(err);
+        } else {
+          return res.sendFile(path.join(__dirname + '/../pages/report.html'));
         }
       }
     });
@@ -202,7 +253,7 @@ router.post('/postText', function (req, res, next) {
   if (req.body.title &&
     req.body.author &&
     req.body.isbn &&
-    req.body.price &&
+    req.body.price.value > 0 &&
     req.body.make) {
 
       var textbookData = {
@@ -221,7 +272,12 @@ router.post('/postText', function (req, res, next) {
           return res.redirect('/marketplace');
         }
       });
-  }else{ return res.redirect('/marketplace'); }
+  }else if(req.body.price.value < 0){ window.alert("Please enter a price greater or equal than 0");
+} else { return res.redirect('/marketplace'); }
+});
+
+router.post('/textbookModify', function (req, res, next) {
+  
 });
 
 module.exports = router;

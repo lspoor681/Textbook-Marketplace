@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Textbook Market</title>
+    <style>
+        h1   {text-align: center}
+        p   {text-align: center}
+        /* The navbar container */
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+    /* Navbar links */
+    .topnav a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    /* Links - change color on hover */
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+    .topnav input[type=text] {
+        float: right;
+        padding: 6px;
+        border: none;
+        margin-top: 8px;
+        margin-right: 12px;
+        font-size: 17px;
+    }
+    </style>
+  </head>
+  <body>
+          <div class="topnav">
+              <a href="/marketplace">Home</a>
+              <a href="/postText">Post</a>
+              <a href="/report">Report</a>
+              <a href="/logout">Logout</a>
+            <form id = "searchForm" action="/marketplace">
+              <div class="search">
+                <input id ="search-bar" type="text" name="Search" placeholder="Search for Textbook..." action="/marketplace" method="get">
+              </div>
+            </form> 
+          </div>
+
+          <input type="text" align="center" placeholder="<%= Textbook.title %>" > <br>
+          <input type="text" name="isbn" minlength="10" maxlength="13" placeholder="<%= Textbook.isbn %>" required=""> <br>
+          <input type="number" name="price" step="0.01" min="0.00" maxlength="10" placeholder="<%= Textbook.price %>" required=""> <br>
+          <select name="make">
+                  <option value="<%= Textbook.make %>"><%= Textbook.make %></option>
+                  <option value="Not Specified">Not Specified</option>
+                  <option value="hardcover">Hardcover</option>
+                  <option value="paperback">Paperback</option>
+                </select> <br><br>
+          <input type="submit" value="Delete"> <br>
+          <input type="submit" value="Submit">
+</form>
+  </body>
+</html>
