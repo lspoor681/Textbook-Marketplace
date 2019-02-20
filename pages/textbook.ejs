@@ -49,19 +49,20 @@
               <div class="search">
                 <input id = "search-bar" type="text" name="Search" placeholder="Search for Textbook..." action="/marketplace" method="get">
               </div>
-            </form> 
+            </form>
           </div>
 
           <h1> <%= Textbook.title %> </h1>
-          <a href="/createReport?textid=<%= Textbook._id %>">Report</a>
-          </form>
-          <p><IMG src="textbook.jpg"></p>
-          <p> <%= Textbook.isbn %> </p>
-          <p> <%= Textbook.price %> </p>
+
+
+          <p><IMG src="91GQ+OWqgHL._SX425_.jpg" style="width:128px;height:128px;"></p>
+          <p> ISBN: <%= Textbook.isbn %> </p>
+          <p> $<%= Textbook.price %> </p>
           <p> Being sold by <%= Seller.username %> </p>
-        <form id="buy" action="/textbook?textid=<%= Textbook._id %>" method="post">
-          <input type="submit" name="buy" value="BUY">
+        <form id="buy" action="/textbook?textid=<%= Textbook._id %>" method="post" align="center">
+          <input class="btn btn-primary" name="buy" type="submit" value="Buy">
         </form>
+        <br>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
       <input type="hidden" name="return" value="/textbook">
       <input type="hidden" name="rm" value="2">
@@ -78,8 +79,9 @@
       <p><input type="image" src="https://www.paypal.com/en_AU/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online."></p>
       <p><img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1"></p>
     </form>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+     <div style="text-align: center"> <a href="/createReport?textid=<%= Textbook._id %>">Report</a></div>
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
